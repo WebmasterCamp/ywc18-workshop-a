@@ -1,5 +1,5 @@
-import { getDatabase, ref, child, get, onValue, set } from 'firebase/database'
-import { useEffect, useState } from 'react'
+import { getDatabase, ref, child, get, set } from 'firebase/database'
+import { useMemo } from 'react'
 
 import { Profile } from './types'
 import { useObject } from './utils'
@@ -31,5 +31,5 @@ export async function addBoardToProfile(uid: string, boardId: string) {
 }
 
 export function useProfile(uid: string) {
-  return useObject<Profile>(profileRef(uid))
+  return useObject<Profile>(useMemo(() => profileRef(uid), [uid]))
 }
