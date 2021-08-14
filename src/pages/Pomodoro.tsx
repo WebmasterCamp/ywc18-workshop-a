@@ -8,24 +8,19 @@ import { PomodoroMode } from '@/types';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { SideBar } from '@/components/SideBar';
-import { TopBar } from '@/components/TopBar';
 import PomodoroBackground from '@/public/pomodoro_background.svg';
 import { Scaffold } from '@/components/Scaffold';
 
-const Layout = styled.div`
-  display: flex;
-`
-
 const TimerBox = styled.div`
-  margin-top: 168px;
+  margin-top: 192px;
   margin-left: 86px;
   width: 220px;
   text-align: center;
 `
 
-const TimerButtonBox = styled.div`
+const TimerButtonContainer = styled.div`
   display: flex;
-  padding: 16px;
+  margin-top: 16px;
   justify-content: center;
 `
 const ModeText = styled.div`
@@ -144,19 +139,13 @@ export function Pomodoro(): ReactElement {
 
   const renderTimerButtonContainer = () => {
     return (
-      <TimerButtonBox>
-        <Grid container direction="row" justifyContent="center" spacing={2}>
-          { mode === 'inactive' ?
-            <Grid item>
-              <Button variant="contained" color="primary" onClick={handleStart}>เริ่มนับเวลา</Button>
-            </Grid>
-            :
-            <Grid item>
-              <DangerButton variant="contained" color="secondary" onClick={handleStop}>เลิกนับเวลา</DangerButton>
-            </Grid>
-          }
-        </Grid>
-      </TimerButtonBox>
+      <TimerButtonContainer>
+      { mode === 'inactive' ?
+        <Button variant="contained" color="primary" onClick={handleStart}>เริ่มนับเวลา</Button>
+        :
+        <DangerButton variant="contained" color="secondary" onClick={handleStop}>เลิกนับเวลา</DangerButton>
+      }
+      </TimerButtonContainer>
     );
   };
 
@@ -170,6 +159,7 @@ export function Pomodoro(): ReactElement {
           {minutes}:{seconds}
         </TimerText>
         <LinearProgress variant="determinate" value={currentPercentage} />
+        {renderTimerButtonContainer()}
       </TimerBox>
     );
   };
@@ -177,7 +167,6 @@ export function Pomodoro(): ReactElement {
   const renderTimerContainer = () => {
     return (
       <Container>
-        {renderTimerButtonContainer()}
         {renderTimer()}
       </Container>
     );
