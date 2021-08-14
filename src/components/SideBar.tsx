@@ -12,6 +12,7 @@ import { AsyncButton } from './NewBoardButton'
 
 const NewButton = styled(AsyncButton)`
   margin: 16px;
+  margin-top: 24px;
   width: calc(100% - 32px);
 `
 
