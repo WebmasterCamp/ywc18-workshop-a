@@ -2,6 +2,7 @@ import { getDatabase, ref, child, get, onValue, set } from 'firebase/database'
 import { useEffect, useState } from 'react'
 
 import { Profile } from './types'
+import { useObject } from './utils'
 
 const defaultProfile: Profile = {
   name: 'Anonymous',
@@ -30,13 +31,5 @@ export async function addBoardToProfile(uid: string, boardId: string) {
 }
 
 export function useProfile(uid: string) {
-  const [profile, setProfile] = useState<Profile | null>(null)
-
-  useEffect(() => {
-    return onValue(profileRef(uid), (snapshot) => {
-      setProfile(snapshot.val())
-    })
-  }, [uid])
-
-  return profile
+  return useObject<Profile>(profileRef(uid))
 }

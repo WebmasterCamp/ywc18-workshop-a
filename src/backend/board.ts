@@ -1,7 +1,8 @@
-import { getDatabase, ref, push, set } from 'firebase/database'
+import { getDatabase, ref, push, set, child } from 'firebase/database'
 
 import { addBoardToProfile } from './profile'
 import { getUser } from './user'
+import { useObject } from './utils'
 
 export interface Board {
   name: string
@@ -9,10 +10,15 @@ export interface Board {
   members: string[]
 }
 
+function boardRef(boardId: string) {
+  const dbRef = ref(getDatabase())
+  return child(dbRef, `/boards/${boardId}`)
+}
+
 export async function createBoard() {
   const user = await getUser()
   const board = {
-    name: 'Untitiled workspace',
+    name: 'Untitled workspace',
     owner: user.uid,
     members: {
       [user.uid]: true,
@@ -23,4 +29,8 @@ export async function createBoard() {
   const boardId = newRef.key as string
   await addBoardToProfile(user.uid, boardId)
   return boardId
+}
+
+export function useBoard(boardId: string) {
+  return useObject<Board>(boardRef(boardId))
 }

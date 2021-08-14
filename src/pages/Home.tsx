@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Box } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import React from 'react'
 
 import { useProfile } from '@/backend/profile'
@@ -26,8 +26,14 @@ export function Home() {
 
 function MyBoards() {
   const profile = useProfile(useUser().uid)
-  if (profile === null) {
-    return <p>Loading...</p>
-  }
-  return <BoardList boards={Object.keys(profile.boards)} />
+  return (
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h4">My workspaces</Typography>
+      {profile ? (
+        <BoardList boards={Object.keys(profile.boards ?? {})} />
+      ) : (
+        <p>Loading...</p>
+      )}
+    </Box>
+  )
 }
