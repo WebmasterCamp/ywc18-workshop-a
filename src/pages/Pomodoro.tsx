@@ -47,8 +47,8 @@ const modeLabel: Record<PomodoroMode, string> = {
   break: 'เวลาพักงาน',
 }
 
-const focusSeconds = 25
-const freeSeconds = 5
+const focusSeconds = 25 * 60
+const freeSeconds = 5 * 60
 
 const maxSecond: Record<PomodoroMode, number> = {
   inactive: 0,
