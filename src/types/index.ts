@@ -1,0 +1,1 @@
+export type PomodoroMode = 'focus' | 'break' | 'inactive';

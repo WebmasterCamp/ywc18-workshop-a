@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 
 import '@/App.css'
 import logo from '@/logo.svg'
+import { Pomodoro } from './pages/Pomodoro'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
         <p>
@@ -38,7 +39,8 @@ function App() {
             Vite Docs
           </a>
         </p>
-      </header>
+      </header> */}
+      <Pomodoro />
     </div>
   )
 }
