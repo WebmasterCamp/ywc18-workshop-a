@@ -1,11 +1,4 @@
-import {
-  getDatabase,
-  ref,
-  child,
-  get,
-  update,
-  onValue,
-} from 'firebase/database'
+import { getDatabase, ref, child, get, onValue, set } from 'firebase/database'
 import { useEffect, useState } from 'react'
 
 import { Profile } from './types'
@@ -14,21 +7,15 @@ const defaultProfile: Profile = {
   name: 'Anonymous',
 }
 
-function profilePath(uid: string) {
-  return `/profiles/${uid}`
-}
-
 function profileRef(uid: string) {
   const dbRef = ref(getDatabase())
-  return child(dbRef, profilePath(uid))
+  return child(dbRef, `/profiles/${uid}`)
 }
 
 export async function createProfileIfNotExist(uid: string) {
   const profile = await get(profileRef(uid))
   if (!profile.exists()) {
-    update(ref(getDatabase()), {
-      [profilePath(uid)]: defaultProfile,
-    })
+    set(profileRef(uid), defaultProfile)
   }
 }
 
