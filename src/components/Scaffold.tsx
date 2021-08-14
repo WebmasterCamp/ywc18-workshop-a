@@ -1,6 +1,8 @@
 import { Box, Divider, Drawer, Toolbar } from '@material-ui/core'
 import React from 'react'
 
+import logo from '@/assets/images/logo.svg'
+
 import { TopBar } from './TopBar'
 
 const drawerWidth = 240
@@ -30,7 +32,9 @@ export function Scaffold({
           },
         }}
       >
-        <Toolbar>Logo here</Toolbar>
+        <Toolbar>
+          <img src={logo} />
+        </Toolbar>
         <Divider />
         {drawerChildren}
       </Drawer>
