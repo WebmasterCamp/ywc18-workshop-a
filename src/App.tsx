@@ -11,8 +11,6 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/pomodoro" component={Pomodoro} />
-        </Switch>
-        <Switch>
           <Route path="/" component={Home} />
         </Switch>
       </BrowserRouter>
