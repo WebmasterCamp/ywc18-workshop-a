@@ -1,13 +1,14 @@
 import { Avatar, Button, Skeleton, Typography } from '@material-ui/core'
 import React from 'react'
 
-import { profileRef, useProfile } from '@/backend/profile'
+import { profileRef } from '@/backend/profile'
 
+import { useMyProfile } from './ProfileProvider'
 import { useUser } from './UserProvider'
 
 export function TopBarUserProfile() {
   const user = useUser()
-  const profile = useProfile(user.uid)
+  const profile = useMyProfile()
 
   const handleClick = () => {
     const newName = prompt('เปลี่ยนชื่อโปรไฟล์', profile?.name)
