@@ -26,10 +26,10 @@ export function UserProvider({ children }: PropsWithChildren<{}>): JSX.Element {
   }, [])
 
   if (errored) {
-    return 'Sign in error'
+    return <>Sign in error</>
   } else if (user !== null) {
     return <UserContext.Provider value={user}>{children}</UserContext.Provider>
   } else {
-    return 'Loading...'
+    return <>Loading...</>
   }
 }
