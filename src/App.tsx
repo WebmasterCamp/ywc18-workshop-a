@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { UserProvider } from './components/UserProvider'
 import { Board } from './pages/Board'
 import { Home } from './pages/Home'
+import { JoinBoard } from './pages/JoinBoard'
 import { Landing } from './pages/Landing'
 
 const theme = createTheme({
@@ -26,11 +27,9 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      'Kanit',
-    ].join(','),
+    fontFamily: ['Kanit'].join(','),
   },
-});
+})
 
 function App() {
   return (
@@ -41,6 +40,7 @@ function App() {
             <Route path="/" component={Landing} exact />
             <Route path="/home" component={Home} />
             <Route path="/board/:boardId" component={Board} />
+            <Route path="/joinboard/:boardId" component={JoinBoard} />
           </Switch>
         </BrowserRouter>
       </ThemeProvider>

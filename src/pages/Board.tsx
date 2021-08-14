@@ -1,7 +1,18 @@
-import { IconButton, List, Skeleton, Typography } from '@material-ui/core'
+import {
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Skeleton,
+  Typography,
+} from '@material-ui/core'
+import Add from '@material-ui/icons/Add'
+import Check from '@material-ui/icons/Check'
 import Create from '@material-ui/icons/Create'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import useCopyClipboard from 'react-use-clipboard'
 
 import { boardRef, useBoard } from '@/backend/board'
 import { MemberItem } from '@/components/MemberItem'
@@ -34,6 +45,7 @@ export function Board() {
               {Object.keys(board.members).map((member) => (
                 <MemberItem key={member} memberId={member} />
               ))}
+              <InviteButton boardId={boardId} />
             </List>
           </div>
         ) : null
@@ -53,5 +65,22 @@ export function Board() {
     >
       <Pomodoro />
     </Scaffold>
+  )
+}
+
+function InviteButton({ boardId }: { boardId: string }) {
+  const [
+    isCopied,
+    setCopied,
+  ] = useCopyClipboard(`${window.location.origin}/joinboard/${boardId}`, {
+    successDuration: 1000,
+  })
+  return (
+    <ListItem button onClick={setCopied}>
+      <ListItemIcon>{isCopied ? <Check /> : <Add />}</ListItemIcon>
+      <ListItemText>
+        {isCopied ? 'คัดลอกลิงก์แล้ว' : 'ชวนสมาชิกเพิ่ม'}
+      </ListItemText>
+    </ListItem>
   )
 }

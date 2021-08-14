@@ -59,3 +59,13 @@ export function useBoardState(boardId: string) {
   )
   return [value, setValue] as const
 }
+
+export async function getBoard(boardId: string) {
+  return (await boardRef(boardId).get()).val()
+}
+
+export async function addUserToBoard(boardId: string, uid: string) {
+  return await boardRef(boardId)
+    .child(`members/${uid}`)
+    .set(firebase.database.ServerValue.TIMESTAMP)
+}
