@@ -8,6 +8,7 @@ import Triangle from '@/assets/images/purple_triangle.svg';
 import DescriptionArt from '@/assets/images/desc_art.svg';
 import Yolo1 from '@/assets/images/yolo1.png';
 import YoloFooter from '@/assets/images/yolo_footer.png';
+import YoloFace from '@/assets/images/yolo_face.png';
 import { Box, Button, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 
@@ -26,7 +27,7 @@ const description2 =
 export function Landing(): ReactElement {
 
   const history = useHistory();
-  
+
   const Nav = (
     <Box height="64px" display="flex" padding="48px 64px" color="#555555">
       <Box>
@@ -102,6 +103,17 @@ export function Landing(): ReactElement {
     </Box>
   )
 
+  const yoloFacebook = (
+    <Box maxWidth="100%" height="500px">
+      <Box display="flex">
+        <img src={YoloFace} style={{width: '1000px', margin: 'auto'}}/>
+      </Box>
+      <Box marginTop="30px" display="flex">
+        <Button onClick={() => { history.push('https://www.facebook.com/Wetimee') }} variant="contained" style={{margin: 'auto'}}><img src={ButtonLogo} style={{margin: '0 8px'}} />Facebook</Button>
+      </Box>
+    </Box>
+  )
+
   const Description2 = (
     <Box position="absolute" left="0" width="100%">
       <Box>
@@ -122,6 +134,7 @@ export function Landing(): ReactElement {
         </Box>
       </Box>
       {yolo1}
+      {yoloFacebook}
       {yoloFooter}
     </Box>
   )
