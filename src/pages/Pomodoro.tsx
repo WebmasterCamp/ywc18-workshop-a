@@ -5,10 +5,17 @@ import {
   LinearProgress,
   Typography,
 } from '@material-ui/core'
-import React, { useMemo, ReactElement, useCallback, useEffect } from 'react'
+import React, {
+  useMemo,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react'
 import { useTimer } from 'react-timer-hook'
 
-import { BoardState, useBoardState } from '@/backend/board'
+import { BoardState } from '@/backend/board'
+import favicon from '@/favicon.svg'
 import PomodoroBackground from '@/public/pomodoro_background.svg'
 import { PomodoroMode } from '@/types'
 
@@ -85,6 +92,22 @@ export function Pomodoro({
 }: PomodoroProps): ReactElement {
   const endTime = state.endTime
   const mode = state.mode
+  const previousMode = useRef<PomodoroMode>(mode)
+
+  useEffect(() => {
+    Notification.requestPermission()
+  }, [])
+
+  useEffect(() => {
+    const oldMode = previousMode.current
+    if (mode === oldMode) return
+    previousMode.current = mode
+    if (mode === 'focus' && oldMode == 'break') {
+      new Notification('พักผ่อนจนหนำใจ ได้เวลากลับไปทำงานแล้ว!')
+    } else if (mode === 'break' && oldMode == 'focus') {
+      new Notification('พักผ่อนได้แล้วนะคนเก่ง! ได้เวลาสนุกแล้วสิ')
+    }
+  }, [mode])
 
   const handleTimerExpire = useCallback(() => {
     nextPhrase()
