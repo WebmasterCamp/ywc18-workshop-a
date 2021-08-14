@@ -1,19 +1,27 @@
 import firebase from 'firebase/app'
 import { useCallback, useMemo } from 'react'
 
+import { PomodoroMode } from '@/types'
+
 import { addBoardToProfile } from './profile'
 import { getUser } from './user'
 import { useObject } from './utils'
 
-export interface BoardState {}
+export interface BoardState {
+  endTime: number
+  mode: PomodoroMode
+}
 
-const emptyBoardState: BoardState = {}
+export const emptyBoardState: BoardState = {
+  endTime: 0,
+  mode: 'inactive',
+}
 
 export interface Board {
   name: string
   owner: string
   members: Record<string, number>
-  state: BoardState
+  state: BoardState | null
 }
 
 export function boardRef(boardId: string) {

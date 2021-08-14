@@ -17,8 +17,14 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useCopyClipboard from 'react-use-clipboard'
 
-import { boardRef, useBoard } from '@/backend/board'
+import {
+  boardRef,
+  BoardState,
+  emptyBoardState,
+  useBoard,
+} from '@/backend/board'
 import { sortByValue } from '@/backend/utils'
+import { Loading } from '@/components/Loading'
 import { MemberItem } from '@/components/MemberItem'
 import { Scaffold } from '@/components/Scaffold'
 import { useUser } from '@/components/UserProvider'
@@ -36,6 +42,8 @@ export function Board() {
       boardRef(boardId).update({ name: newName })
     }
   }
+
+  const viewMode = board?.owner !== user.uid
 
   return (
     <Scaffold
@@ -78,7 +86,19 @@ export function Board() {
       }
       topBarEndChildren={<ShareButton boardId={boardId} />}
     >
-      <Pomodoro />
+      {board ? (
+        <Pomodoro
+          state={board.state ?? emptyBoardState}
+          setState={(newState: BoardState) => {
+            if (!viewMode) {
+              boardRef(boardId).child('state').set(newState)
+            }
+          }}
+          viewMode={viewMode}
+        />
+      ) : (
+        <Loading />
+      )}
     </Scaffold>
   )
 }
