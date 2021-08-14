@@ -8,12 +8,14 @@ import {
 import React, {
   useMemo,
   ReactElement,
-  useState,
   useCallback,
   useEffect,
+  useRef,
 } from 'react'
 import { useTimer } from 'react-timer-hook'
 
+import { BoardState } from '@/backend/board'
+import favicon from '@/favicon.svg'
 import PomodoroBackground from '@/public/pomodoro_background.svg'
 import { PomodoroMode } from '@/types'
 
@@ -77,9 +79,35 @@ const maxSecond: Record<PomodoroMode, number> = {
 const time = new Date()
 time.setSeconds(time.getSeconds() + focusSeconds)
 
-export function Pomodoro(): ReactElement {
-  const [endTime, setEndTime] = useState<number>(0)
-  const [mode, setMode] = useState<PomodoroMode>('inactive')
+export interface PomodoroProps {
+  state: BoardState
+  setState: (newState: BoardState) => void
+  viewMode: boolean
+}
+
+export function Pomodoro({
+  state,
+  setState,
+  viewMode,
+}: PomodoroProps): ReactElement {
+  const endTime = state.endTime
+  const mode = state.mode
+  const previousMode = useRef<PomodoroMode>(mode)
+
+  useEffect(() => {
+    Notification.requestPermission()
+  }, [])
+
+  useEffect(() => {
+    const oldMode = previousMode.current
+    if (mode === oldMode) return
+    previousMode.current = mode
+    if (mode === 'focus' && oldMode == 'break') {
+      new Notification('พักผ่อนจนหนำใจ ได้เวลากลับไปทำงานแล้ว!')
+    } else if (mode === 'break' && oldMode == 'focus') {
+      new Notification('พักผ่อนได้แล้วนะคนเก่ง! ได้เวลาสนุกแล้วสิ')
+    }
+  }, [mode])
 
   const handleTimerExpire = useCallback(() => {
     nextPhrase()
@@ -96,6 +124,11 @@ export function Pomodoro(): ReactElement {
   } = useTimer({ expiryTimestamp: endTime, onExpire: handleTimerExpire })
 
   useEffect(() => {
+    start()
+    setTimeout(() => restart(endTime), 0)
+  }, [endTime])
+
+  useEffect(() => {
     if (mode !== 'inactive') {
       resume()
     } else {
@@ -104,18 +137,18 @@ export function Pomodoro(): ReactElement {
   }, [isRunning, mode])
 
   const setPhrase = (newMode: PomodoroMode, seconds: number) => {
-    setMode(newMode)
     const time = new Date()
     time.setSeconds(time.getSeconds() + seconds)
-    console.log({ newMode, time })
-    setEndTime(time.getTime())
-    restart(time.getTime())
+    time.setMilliseconds(0)
+    setState({
+      endTime: time.getTime(),
+      mode: newMode,
+    })
   }
 
   const nextPhrase = useCallback(() => {
     switch (mode) {
       case 'inactive':
-        start()
         setPhrase('focus', focusSeconds)
         break
       case 'focus':
@@ -146,7 +179,6 @@ export function Pomodoro(): ReactElement {
       return 0
     }
     const percentage = (minutes * 60 + seconds) / maxSecond[mode]
-    console.log(percentage)
     return 100 - percentage * 100
   }, [mode, minutes, seconds])
 
@@ -184,7 +216,7 @@ export function Pomodoro(): ReactElement {
           </Typography>
         </TimerText>
         <LinearProgress variant="determinate" value={currentPercentage} />
-        {renderTimerButtonContainer()}
+        {!viewMode ? renderTimerButtonContainer() : null}
         <SkipButton onClick={handleSkip} />
       </TimerBox>
     )

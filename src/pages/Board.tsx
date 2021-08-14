@@ -12,12 +12,19 @@ import Add from '@material-ui/icons/Add'
 import Check from '@material-ui/icons/Check'
 import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import Create from '@material-ui/icons/Create'
+import Share from '@material-ui/icons/Share'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useCopyClipboard from 'react-use-clipboard'
 
-import { boardRef, useBoard } from '@/backend/board'
+import {
+  boardRef,
+  BoardState,
+  emptyBoardState,
+  useBoard,
+} from '@/backend/board'
 import { sortByValue } from '@/backend/utils'
+import { Loading } from '@/components/Loading'
 import { MemberItem } from '@/components/MemberItem'
 import { Scaffold } from '@/components/Scaffold'
 import { useUser } from '@/components/UserProvider'
@@ -35,6 +42,8 @@ export function Board() {
       boardRef(boardId).update({ name: newName })
     }
   }
+
+  const viewMode = board?.owner !== user.uid
 
   return (
     <Scaffold
@@ -75,8 +84,21 @@ export function Board() {
           ) : null}
         </>
       }
+      topBarEndChildren={<ShareButton boardId={boardId} />}
     >
-      <Pomodoro />
+      {board ? (
+        <Pomodoro
+          state={board.state ?? emptyBoardState}
+          setState={(newState: BoardState) => {
+            if (!viewMode) {
+              boardRef(boardId).child('state').set(newState)
+            }
+          }}
+          viewMode={viewMode}
+        />
+      ) : (
+        <Loading />
+      )}
     </Scaffold>
   )
 }
@@ -95,5 +117,24 @@ function InviteButton({ boardId }: { boardId: string }) {
         {isCopied ? 'คัดลอกลิงก์แล้ว' : 'ชวนสมาชิกเพิ่ม'}
       </ListItemText>
     </ListItem>
+  )
+}
+
+function ShareButton({ boardId }: { boardId: string }) {
+  const [isCopied, setCopied] = useCopyClipboard(
+    `${window.location.origin}/app/joinboard/${boardId}`,
+    {
+      successDuration: 1000,
+    }
+  )
+  return (
+    <Button
+      variant="contained"
+      onClick={setCopied}
+      startIcon={isCopied ? <Check /> : <Share />}
+      sx={{ mr: 2 }}
+    >
+      {isCopied ? 'คัดลอกลิงก์แล้ว' : 'แชร์'}
+    </Button>
   )
 }

@@ -3,7 +3,6 @@ import React, { useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { createBoard } from '@/backend/board'
-import { useProfile } from '@/backend/profile'
 import { sortByValue } from '@/backend/utils'
 import {
   BoardCard,
@@ -14,21 +13,20 @@ import {
 import { BoardList } from '@/components/BoardList'
 import { FirebaseBoardCard } from '@/components/FirebaseBoardCard'
 import { Loading } from '@/components/Loading'
+import { useMyProfile } from '@/components/ProfileProvider'
 import { Scaffold } from '@/components/Scaffold'
 import { SideBar } from '@/components/SideBar'
-import { useUser } from '@/components/UserProvider'
 
 export function Home() {
   const history = useHistory()
-  const profile = useProfile(useUser().uid)
-  const rawBoards = profile?.boards
+  const profile = useMyProfile()
   const boards = useMemo(() => {
-    if (!rawBoards) {
+    if (profile === null) {
       return null
     } else {
-      return sortByValue(rawBoards, true)
+      return sortByValue(profile.boards ?? {}, true)
     }
-  }, [rawBoards])
+  }, [profile])
   return (
     <Scaffold linkToHome={false} drawerChildren={<SideBar />}>
       <Box sx={{ padding: 3 }}>
