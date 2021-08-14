@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, signInAnonymously } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
+
+import { createProfileIfNotExist } from './profile'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAk1l-ftV2XmeDKsOJsKefD4RatAP6QFZ0',
@@ -16,4 +18,9 @@ export function initFirebase() {
   initializeApp(firebaseConfig)
   const auth = getAuth()
   signInAnonymously(auth)
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      createProfileIfNotExist(user.uid)
+    }
+  })
 }
