@@ -1,5 +1,4 @@
 import { Avatar, Button, Skeleton, Typography } from '@material-ui/core'
-import { update } from 'firebase/database'
 import React from 'react'
 
 import { profileRef, useProfile } from '@/backend/profile'
@@ -13,7 +12,7 @@ export function TopBarUserProfile() {
   const handleClick = () => {
     const newName = prompt('Change profile name')
     if (newName !== null) {
-      update(profileRef(user.uid), { name: newName })
+      profileRef(user.uid).update({ name: newName })
     }
   }
 

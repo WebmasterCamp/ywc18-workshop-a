@@ -1,5 +1,6 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
 
 import { createProfileIfNotExist } from './profile'
 
@@ -15,10 +16,10 @@ const firebaseConfig = {
 }
 
 export function initFirebase() {
-  initializeApp(firebaseConfig)
-  const auth = getAuth()
-  signInAnonymously(auth)
-  onAuthStateChanged(auth, (user) => {
+  firebase.initializeApp(firebaseConfig)
+  const auth = firebase.auth()
+  auth.signInAnonymously()
+  auth.onAuthStateChanged((user) => {
     if (user) {
       createProfileIfNotExist(user.uid)
     }

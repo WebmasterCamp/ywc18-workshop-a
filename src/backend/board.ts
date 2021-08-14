@@ -1,4 +1,4 @@
-import { getDatabase, ref, push, set, child } from 'firebase/database'
+import firebase from 'firebase/app'
 import { useMemo } from 'react'
 
 import { addBoardToProfile } from './profile'
@@ -12,8 +12,7 @@ export interface Board {
 }
 
 export function boardRef(boardId: string) {
-  const dbRef = ref(getDatabase())
-  return child(dbRef, `/boards/${boardId}`)
+  return firebase.database().ref(`boards/${boardId}`)
 }
 
 export async function createBoard() {
@@ -25,8 +24,8 @@ export async function createBoard() {
       [user.uid]: true,
     },
   }
-  const newRef = push(ref(getDatabase(), 'boards'))
-  await set(newRef, board)
+  const newRef = firebase.database().ref('boards').push()
+  await newRef.set(board)
   const boardId = newRef.key as string
   await addBoardToProfile(user.uid, boardId)
   return boardId

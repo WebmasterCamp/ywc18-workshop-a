@@ -1,6 +1,5 @@
 import { IconButton, List, Skeleton, Typography } from '@material-ui/core'
 import Create from '@material-ui/icons/Create'
-import { update } from 'firebase/database'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -19,7 +18,7 @@ export function Board() {
   const renameBoard = () => {
     const newName = prompt('Change board name')
     if (newName !== null) {
-      update(boardRef(boardId), { name: newName })
+      boardRef(boardId).update({ name: newName })
     }
   }
 

@@ -1,4 +1,4 @@
-import { User } from 'firebase/auth'
+import firebase from 'firebase/app'
 import React, {
   createContext,
   PropsWithChildren,
@@ -9,10 +9,12 @@ import React, {
 
 import { getUser } from '@/backend/user'
 
-const UserContext = createContext<User>(({} as unknown) as User)
+const UserContext = createContext<firebase.User>(
+  ({} as unknown) as firebase.User
+)
 
 export function UserProvider({ children }: PropsWithChildren<{}>): JSX.Element {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<firebase.User | null>(null)
   const [errored, setErrored] = useState(false)
 
   useEffect(() => {

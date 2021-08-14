@@ -1,13 +1,13 @@
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
+import firebase from 'firebase/app'
 
 export async function getUser() {
-  const auth = getAuth()
+  const auth = firebase.auth()
   const user = auth.currentUser
   if (user) {
     return user
   }
-  return await new Promise<User>((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+  return await new Promise<firebase.User>((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         resolve(user)
         unsubscribe()

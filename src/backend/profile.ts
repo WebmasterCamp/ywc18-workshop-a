@@ -1,4 +1,4 @@
-import { getDatabase, ref, child, get, set } from 'firebase/database'
+import firebase from 'firebase/app'
 import { useMemo } from 'react'
 
 import { Profile } from './types'
@@ -11,23 +11,19 @@ const defaultProfile: Profile = {
 }
 
 export function profileRef(uid: string) {
-  const dbRef = ref(getDatabase())
-  return child(dbRef, `/profiles/${uid}`)
-}
-
-function profileBoardsRef(uid: string) {
-  return child(profileRef(uid), 'boards')
+  return firebase.database().ref(`/profiles/${uid}`)
 }
 
 export async function createProfileIfNotExist(uid: string) {
-  const profile = await get(profileRef(uid))
+  const ref = profileRef(uid)
+  const profile = await ref.get()
   if (!profile.exists()) {
-    set(profileRef(uid), defaultProfile)
+    await ref.set(defaultProfile)
   }
 }
 
 export async function addBoardToProfile(uid: string, boardId: string) {
-  return await set(child(profileRef(uid), `boards/${boardId}`), true)
+  return await profileRef(uid).child(`boards/${boardId}`).set(true)
 }
 
 export function useProfile(uid: string) {
