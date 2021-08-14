@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { UserProvider } from './components/UserProvider'
 import { Board } from './pages/Board'
 import { Home } from './pages/Home'
-import { Pomodoro } from './pages/Pomodoro'
 
 const theme = createTheme({
   palette: {
@@ -14,6 +13,15 @@ const theme = createTheme({
     },
     secondary: {
       main: '#F6CF4A',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'unset',
+        },
+      },
     },
   },
 })
