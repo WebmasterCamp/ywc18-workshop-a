@@ -1,7 +1,10 @@
 import styled from '@emotion/styled'
-import { List, ListItem, ListItemText } from '@material-ui/core'
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import Add from '@material-ui/icons/Add'
+import Dashboard from '@material-ui/icons/Dashboard'
+import Help from '@material-ui/icons/Help'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { createBoard } from '@/backend/board'
 
@@ -26,9 +29,15 @@ export function SideBar() {
       </NewButton>
       <List>
         <ListItem button>
+          <ListItemIcon>
+            <Dashboard />
+          </ListItemIcon>
           <ListItemText>หน้าแรก</ListItemText>
         </ListItem>
-        <ListItem button>
+        <ListItem component={Link} to="/" button>
+          <ListItemIcon>
+            <Help />
+          </ListItemIcon>
           <ListItemText>วิธีใช้งาน</ListItemText>
         </ListItem>
       </List>
