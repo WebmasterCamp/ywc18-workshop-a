@@ -48,6 +48,7 @@ const BackgroundContainer = styled.div`
 
 const DangerButton = styled(Button)`
   background-color: #EB5757;
+  color: white;
 
   &:hover {
     background-color: #bf2828;
