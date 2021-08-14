@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import {
-  Button,
   Divider,
   Drawer,
   List,
@@ -10,9 +9,13 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 
+import { createBoard } from '@/backend/board'
+
+import { AsyncButton } from './NewBoardButton'
+
 const drawerWidth = 240
 
-const NewButton = styled(Button)`
+const NewButton = styled(AsyncButton)`
   margin: 16px;
   width: calc(100% - 32px);
 `
@@ -33,7 +36,14 @@ export function SideBar() {
     >
       <Toolbar>Logo here</Toolbar>
       <Divider />
-      <NewButton variant="contained">New Document</NewButton>
+      <NewButton
+        variant="contained"
+        onClick={async () => {
+          await createBoard()
+        }}
+      >
+        New Workspace
+      </NewButton>
       <List>
         <ListItem button>
           <ListItemText>Home</ListItemText>
