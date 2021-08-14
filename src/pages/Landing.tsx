@@ -6,6 +6,8 @@ import TaglineLogo from '@/assets/images/logo_tagline.svg';
 import LandingHero from '@/assets/images/landing_hero.svg';
 import Triangle from '@/assets/images/purple_triangle.svg';
 import DescriptionArt from '@/assets/images/desc_art.svg';
+import Yolo1 from '@/assets/images/yolo1.png';
+import YoloFooter from '@/assets/images/yolo_footer.png';
 import { Box, Button, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 
@@ -51,7 +53,7 @@ export function Landing(): ReactElement {
       <Box width="400px" color="#555555" marginTop="16px" marginBottom="32px">
         <Typography fontSize="16px" fontWeight={300} lineHeight="24px">การทำงานร่วมกันมันเป็นอะไรที่น่าสนุกนะ แต่บางครั้งการทำงานร่วมกันก็กินเวลาจนหาข้อสรุปไม่ได้ Wetime จึงมีไอเดียอยากให้การประชุมไม่น่าเบื่อและจำเจ</Typography>
       </Box>
-      <Button onClick={() => { history.push('/home') }} variant="contained">เริ่มใช้<img src={ButtonLogo} style={{margin: '0 8px'}} />บนบราวเซอร์คุณ</Button>
+      <Button onClick={() => { history.push('/app') }} variant="contained">เริ่มใช้<img src={ButtonLogo} style={{margin: '0 8px'}} />บนบราวเซอร์คุณ</Button>
       <Box position="absolute" right="48px" bottom="0">
         <img src={LandingHero} style={{width: '620px'}}/>
       </Box>
@@ -69,12 +71,24 @@ export function Landing(): ReactElement {
     </Box>
   )
 
+  const yolo1 = (
+    <Box display="flex" maxWidth="100%">
+      <img src={Yolo1} style={{width: '100%', margin: 'auto'}}/>
+    </Box>
+  )
+
+  const yoloFooter = (
+    <Box display="flex" maxWidth="100%">
+      <img src={YoloFooter} style={{width: '100%', margin: 'auto'}}/>
+    </Box>
+  )
+
   const Description2 = (
     <Box position="absolute" left="0" width="100%">
-      <Box zIndex={-100}>
+      <Box>
         <img src={Triangle} style={{width: '100%'}}/>
       </Box>
-      <Box style={{background: '#4A2EF4'}} marginTop="-40px" zIndex={0}>
+      <Box style={{background: '#4A2EF4'}} marginTop="-40px">
         <Box width="100%" display="flex">
           <Box margin="auto">
             <Box margin="-50px -34px 0 0">
@@ -88,6 +102,8 @@ export function Landing(): ReactElement {
           </Box>
         </Box>
       </Box>
+      {yolo1}
+      {yoloFooter}
     </Box>
   )
 
