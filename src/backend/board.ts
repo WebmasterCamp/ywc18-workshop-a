@@ -11,7 +11,7 @@ export interface Board {
   members: Record<string, boolean>
 }
 
-function boardRef(boardId: string) {
+export function boardRef(boardId: string) {
   const dbRef = ref(getDatabase())
   return child(dbRef, `/boards/${boardId}`)
 }

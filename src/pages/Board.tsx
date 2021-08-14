@@ -1,8 +1,10 @@
-import { List, Skeleton, Typography } from '@material-ui/core'
+import { IconButton, List, Skeleton, Typography } from '@material-ui/core'
+import Create from '@material-ui/icons/Create'
+import { update } from 'firebase/database'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useBoard } from '@/backend/board'
+import { boardRef, useBoard } from '@/backend/board'
 import { MemberItem } from '@/components/MemberItem'
 import { Scaffold } from '@/components/Scaffold'
 
@@ -11,6 +13,13 @@ import { Pomodoro } from './Pomodoro'
 export function Board() {
   const { boardId } = useParams<{ boardId: string }>()
   const board = useBoard(boardId)
+
+  const renameBoard = () => {
+    const newName = prompt('Change board name')
+    if (newName !== null) {
+      update(boardRef(boardId), { name: newName })
+    }
+  }
 
   return (
     <Scaffold
@@ -29,9 +38,14 @@ export function Board() {
         ) : null
       }
       topBarChildren={
-        <Typography variant="h6">
-          {board ? board.name : <Skeleton variant="text" width={150} />}
-        </Typography>
+        <>
+          <Typography variant="h6" sx={{ mr: 1 }}>
+            {board ? board.name : <Skeleton variant="text" width={150} />}
+          </Typography>
+          <IconButton size="small" onClick={renameBoard}>
+            <Create fontSize="small" />
+          </IconButton>
+        </>
       }
     >
       <Pomodoro />
