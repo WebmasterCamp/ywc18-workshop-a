@@ -1,15 +1,12 @@
-import React, { useMemo } from 'react';
 import styled from '@emotion/styled'
-import { ReactElement } from "react";
-import { Box, Container, Button, Grid, LinearProgress } from '@material-ui/core';
+import React, { useMemo, ReactElement, useState, useCallback, useEffect } from "react";
+import { Container, Button, LinearProgress } from '@material-ui/core';
 import { useTimer } from 'react-timer-hook';
-import { useState } from 'react';
 import { PomodoroMode } from '@/types';
-import { useCallback } from 'react';
-import { useEffect } from 'react';
 import { SideBar } from '@/components/SideBar';
 import PomodoroBackground from '@/public/pomodoro_background.svg';
 import { Scaffold } from '@/components/Scaffold';
+
 
 const TimerBox = styled.div`
   margin-top: 192px;
@@ -42,7 +39,7 @@ const BackgroundContainer = styled.div`
 `
 
 const DangerButton = styled(Button)`
-  background-color: #EB5757;
+  background-color: #eb5757;
   color: white;
 
   &:hover {
@@ -51,33 +48,31 @@ const DangerButton = styled(Button)`
 `
 
 const modeLabel: Record<PomodoroMode, string> = {
-  'inactive': 'ยังไม่เริ่มนับเวลา',
-  'focus': 'เวลาทำงาน',
-  'break': 'เวลาพักงาน',
+  inactive: 'ยังไม่เริ่มนับเวลา',
+  focus: 'เวลาทำงาน',
+  break: 'เวลาพักงาน',
 }
 
-
-const focusSeconds = 25;
-const freeSeconds = 5;
+const focusSeconds = 25
+const freeSeconds = 5
 
 const maxSecond: Record<PomodoroMode, number> = {
-  'inactive': 0,
-  'focus': focusSeconds,
-  'break': freeSeconds,
+  inactive: 0,
+  focus: focusSeconds,
+  break: freeSeconds,
 }
 
-const time = new Date();
-time.setSeconds(time.getSeconds() + focusSeconds);
+const time = new Date()
+time.setSeconds(time.getSeconds() + focusSeconds)
 
 export function Pomodoro(): ReactElement {
-
   const [endTime, setEndTime] = useState<number>(0)
-  const [mode, setMode] = useState<PomodoroMode>('inactive');
+  const [mode, setMode] = useState<PomodoroMode>('inactive')
 
   const handleTimerExpire = useCallback(() => {
-    nextPhrase();
+    nextPhrase()
   }, [mode])
-  
+
   const {
     seconds,
     minutes,
@@ -86,55 +81,55 @@ export function Pomodoro(): ReactElement {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp: endTime, onExpire: handleTimerExpire });
+  } = useTimer({ expiryTimestamp: endTime, onExpire: handleTimerExpire })
 
   useEffect(() => {
     if (mode !== 'inactive') {
-      resume();
+      resume()
     } else {
-      pause();
+      pause()
     }
   }, [isRunning, mode])
 
   const setPhrase = (newMode: PomodoroMode, seconds: number) => {
-    setMode(newMode);
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + seconds);
-    console.log({ newMode, time });
-    setEndTime(time.getTime());
-    restart(time.getTime());
+    setMode(newMode)
+    const time = new Date()
+    time.setSeconds(time.getSeconds() + seconds)
+    console.log({ newMode, time })
+    setEndTime(time.getTime())
+    restart(time.getTime())
   }
 
   const nextPhrase = useCallback(() => {
     switch (mode) {
       case 'inactive':
-        start();
-        setPhrase('focus', focusSeconds);
-        break;
+        start()
+        setPhrase('focus', focusSeconds)
+        break
       case 'focus':
-        setPhrase('break', freeSeconds);
-        break;
+        setPhrase('break', freeSeconds)
+        break
       case 'break':
-        setPhrase('focus', focusSeconds);
-        break;
+        setPhrase('focus', focusSeconds)
+        break
     }
   }, [mode])
 
   const handleStart = () => {
-    nextPhrase();
+    nextPhrase()
   }
 
   const handleStop = () => {
-    setPhrase('inactive', 0);
+    setPhrase('inactive', 0)
   }
 
   const currentPercentage = useMemo(() => {
     if (mode === 'inactive') {
-      return 0;
+      return 0
     }
-    const percentage = ((minutes * 60) + seconds)/maxSecond[mode];
+    const percentage = (minutes * 60 + seconds) / maxSecond[mode]
     console.log(percentage)
-    return 100 - (percentage * 100);
+    return 100 - percentage * 100
   }, [mode, minutes, seconds])
 
   const renderTimerButtonContainer = () => {
@@ -152,34 +147,30 @@ export function Pomodoro(): ReactElement {
   const renderTimer = () => {
     return (
       <TimerBox>
-        <ModeText>
-          {modeLabel[mode]}
-        </ModeText>
+        <ModeText>{modeLabel[mode]}</ModeText>
         <TimerText>
           {minutes}:{seconds}
         </TimerText>
         <LinearProgress variant="determinate" value={currentPercentage} />
         {renderTimerButtonContainer()}
       </TimerBox>
-    );
-  };
+    )
+  }
 
   const renderTimerContainer = () => {
     return (
       <Container>
         {renderTimer()}
       </Container>
-    );
-  };
+    )
+  }
 
   return (
     <Scaffold drawerChildren={<SideBar />}>
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        {renderTimerContainer()}
-        <BackgroundContainer>
-          <img src={PomodoroBackground} alt="React Logo" />
-        </BackgroundContainer>
-      </Box>
+      {renderTimerContainer()}
+      <BackgroundContainer>
+        <img src={PomodoroBackground} alt="React Logo" />
+      </BackgroundContainer>
     </Scaffold>
-  );
-};
+  )
+}

@@ -1,10 +1,11 @@
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { UserProvider } from './components/UserProvider'
+import { Board } from './pages/Board'
 import { Home } from './pages/Home'
 import { Pomodoro } from './pages/Pomodoro'
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createTheme({
   palette: {
@@ -15,7 +16,7 @@ const theme = createTheme({
       main: '#F6CF4A',
     },
   },
-});
+})
 
 function App() {
   return (
@@ -23,8 +24,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Switch>
-            <Route path="/pomodoro" component={Pomodoro} />
-            <Route path="/" component={Home} />
+            <Route path="/" component={Home} exact />
+            <Route path="/board/:boardId" component={Board} />
           </Switch>
         </BrowserRouter>
       </ThemeProvider>
