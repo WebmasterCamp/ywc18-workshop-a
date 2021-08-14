@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Toolbar,
 } from '@material-ui/core'
 import React from 'react'
 
@@ -30,7 +31,7 @@ export function SideBar() {
         },
       }}
     >
-      Logo here
+      <Toolbar>Logo here</Toolbar>
       <Divider />
       <NewButton variant="contained">New Document</NewButton>
       <List>

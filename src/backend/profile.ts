@@ -1,7 +1,16 @@
-import { UserProfile } from 'firebase/auth'
-import { getDatabase, ref, child, get, update } from 'firebase/database'
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  update,
+  onValue,
+} from 'firebase/database'
+import { useEffect, useState } from 'react'
 
-const defaultProfile: UserProfile = {
+import { Profile } from './types'
+
+const defaultProfile: Profile = {
   name: 'Anonymous',
 }
 
@@ -21,4 +30,16 @@ export async function createProfileIfNotExist(uid: string) {
       [profilePath(uid)]: defaultProfile,
     })
   }
+}
+
+export function useProfile(uid: string) {
+  const [profile, setProfile] = useState<Profile | null>(null)
+
+  useEffect(() => {
+    return onValue(profileRef(uid), (snapshot) => {
+      setProfile(snapshot.val())
+    })
+  }, [uid])
+
+  return profile
 }

@@ -2,6 +2,7 @@ import { User } from 'firebase/auth'
 import React, {
   createContext,
   PropsWithChildren,
+  useContext,
   useEffect,
   useState,
 } from 'react'
@@ -32,4 +33,8 @@ export function UserProvider({ children }: PropsWithChildren<{}>): JSX.Element {
   } else {
     return <>Loading...</>
   }
+}
+
+export function useUser() {
+  return useContext(UserContext)
 }
