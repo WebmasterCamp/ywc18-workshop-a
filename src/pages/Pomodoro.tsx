@@ -52,6 +52,13 @@ const DangerButton = styled(Button)`
   }
 `
 
+const SkipButton = styled.div`
+  width: 100%;
+  height: 100px;
+  margin-top: 32px;
+  cursor: pointer;
+`
+
 const modeLabel: Record<PomodoroMode, string> = {
   inactive: 'ยังไม่เริ่มนับเวลา',
   focus: 'เวลาทำงาน',
@@ -128,6 +135,12 @@ export function Pomodoro(): ReactElement {
     setPhrase('inactive', 0)
   }
 
+  const handleSkip = () => {
+    if (mode !== 'inactive') {
+      setPhrase(mode, 5)
+    }
+  }
+
   const currentPercentage = useMemo(() => {
     if (mode === 'inactive') {
       return 0
@@ -172,6 +185,7 @@ export function Pomodoro(): ReactElement {
         </TimerText>
         <LinearProgress variant="determinate" value={currentPercentage} />
         {renderTimerButtonContainer()}
+        <SkipButton onClick={handleSkip} />
       </TimerBox>
     )
   }
