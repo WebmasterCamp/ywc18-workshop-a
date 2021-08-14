@@ -8,7 +8,7 @@ import { useObject } from './utils'
 export interface Board {
   name: string
   owner: string
-  members: string[]
+  members: Record<string, boolean>
 }
 
 function boardRef(boardId: string) {

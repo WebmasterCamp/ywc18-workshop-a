@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Typography } from '@material-ui/core'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { useBoard } from '@/backend/board'
 
@@ -8,7 +9,7 @@ export interface BoardCardProps {
   boardId: string
 }
 
-const Layout = styled.div`
+const Layout = styled(Link)`
   display: flex;
   flex-direction: column;
   width: 165px;
@@ -16,7 +17,9 @@ const Layout = styled.div`
   margin: 8px;
   background-color: #c1c4ff;
   border-radius: 24px;
+  color: inherit;
   overflow: hidden;
+  text-decoration: none;
 `
 
 const Preview = styled.div`
@@ -37,7 +40,7 @@ const BoardName = styled.div`
 export function BoardCard({ boardId }: BoardCardProps) {
   const board = useBoard(boardId)
   return (
-    <Layout>
+    <Layout to={`/board/${boardId}`}>
       <Preview />
       <BoardName>
         <Typography>{board?.name}</Typography>
