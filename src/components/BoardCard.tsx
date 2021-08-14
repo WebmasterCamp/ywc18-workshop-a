@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { useBoard } from '@/backend/board'
+import { useBoardName } from '@/backend/board'
 
 export interface BoardCardProps {
   boardId: string
@@ -38,12 +38,12 @@ const BoardName = styled.div`
 `
 
 export function BoardCard({ boardId }: BoardCardProps) {
-  const board = useBoard(boardId)
+  const boardName = useBoardName(boardId)
   return (
     <Layout to={`/board/${boardId}`}>
       <Preview />
       <BoardName>
-        <Typography>{board?.name}</Typography>
+        <Typography>{boardName}</Typography>
       </BoardName>
     </Layout>
   )
