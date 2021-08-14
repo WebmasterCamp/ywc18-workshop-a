@@ -12,7 +12,7 @@ const emptyBoardState: BoardState = {}
 export interface Board {
   name: string
   owner: string
-  members: Record<string, boolean>
+  members: Record<string, number>
   state: BoardState
 }
 

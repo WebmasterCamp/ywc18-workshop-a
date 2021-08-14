@@ -14,3 +14,13 @@ export function useObject<T>(ref: firebase.database.Reference) {
 
   return value
 }
+
+export function sortByValue(
+  object: Record<string, number>,
+  desc: boolean = false
+): string[] {
+  return Object.keys(object)
+    .map((key) => ({ key, value: object[key] }))
+    .sort((a, b) => (desc ? b.value - a.value : a.value - b.value))
+    .map(({ key }) => key)
+}

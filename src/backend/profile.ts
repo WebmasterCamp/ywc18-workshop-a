@@ -7,7 +7,6 @@ import { useObject } from './utils'
 const defaultProfile: Profile = {
   name: 'Anonymous',
   boards: {},
-  sharedBoards: {},
 }
 
 export function profileRef(uid: string) {

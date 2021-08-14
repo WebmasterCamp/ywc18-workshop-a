@@ -1,8 +1,8 @@
-import styled from '@emotion/styled'
 import { Box, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { useProfile } from '@/backend/profile'
+import { sortByValue } from '@/backend/utils'
 import { BoardList } from '@/components/BoardList'
 import { Scaffold } from '@/components/Scaffold'
 import { SideBar } from '@/components/SideBar'
@@ -18,14 +18,18 @@ export function Home() {
 
 function MyBoards() {
   const profile = useProfile(useUser().uid)
+  const rawBoards = profile?.boards
+  const boards = useMemo(() => {
+    if (!rawBoards) {
+      return null
+    } else {
+      return sortByValue(rawBoards, true)
+    }
+  }, [rawBoards])
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4">ห้องของฉัน</Typography>
-      {profile ? (
-        <BoardList boards={Object.keys(profile.boards ?? {})} />
-      ) : (
-        <p>Loading...</p>
-      )}
+      {boards !== null ? <BoardList boards={boards} /> : <p>Loading...</p>}
     </Box>
   )
 }

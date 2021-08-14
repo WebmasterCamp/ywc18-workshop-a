@@ -4,6 +4,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { useBoardName } from '@/backend/board'
+import { addBoardToProfile } from '@/backend/profile'
+
+import { useUser } from './UserProvider'
 
 export interface BoardCardProps {
   boardId: string
@@ -39,8 +42,12 @@ const BoardName = styled.div`
 
 export function BoardCard({ boardId }: BoardCardProps) {
   const boardName = useBoardName(boardId)
+  const user = useUser()
   return (
-    <Layout to={`/app/board/${boardId}`}>
+    <Layout
+      to={`/app/board/${boardId}`}
+      onClick={() => addBoardToProfile(user.uid, boardId)}
+    >
       <Preview />
       <BoardName>
         <Typography>{boardName}</Typography>

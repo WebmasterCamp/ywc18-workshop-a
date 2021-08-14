@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom'
 import useCopyClipboard from 'react-use-clipboard'
 
 import { boardRef, useBoard } from '@/backend/board'
+import { sortByValue } from '@/backend/utils'
 import { MemberItem } from '@/components/MemberItem'
 import { Scaffold } from '@/components/Scaffold'
 import { useUser } from '@/components/UserProvider'
@@ -42,7 +43,7 @@ export function Board() {
               สมาชิก
             </Typography>
             <List>
-              {Object.keys(board.members).map((member) => (
+              {sortByValue(board.members).map((member) => (
                 <MemberItem key={member} memberId={member} />
               ))}
               <InviteButton boardId={boardId} />
