@@ -1,22 +1,22 @@
 import { Box, Typography } from '@material-ui/core'
 import React, { useMemo } from 'react'
 
+import { createBoard } from '@/backend/board'
 import { useProfile } from '@/backend/profile'
 import { sortByValue } from '@/backend/utils'
+import {
+  BoardCard,
+  boardTypeBlank,
+  boardTypePomodoro,
+  boardTypeStickies,
+} from '@/components/BoardCard'
 import { BoardList } from '@/components/BoardList'
+import { FirebaseBoardCard } from '@/components/FirebaseBoardCard'
 import { Scaffold } from '@/components/Scaffold'
 import { SideBar } from '@/components/SideBar'
 import { useUser } from '@/components/UserProvider'
 
 export function Home() {
-  return (
-    <Scaffold drawerChildren={<SideBar />}>
-      <MyBoards />
-    </Scaffold>
-  )
-}
-
-function MyBoards() {
   const profile = useProfile(useUser().uid)
   const rawBoards = profile?.boards
   const boards = useMemo(() => {
@@ -27,9 +27,33 @@ function MyBoards() {
     }
   }, [rawBoards])
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h4">ห้องของฉัน</Typography>
-      {boards !== null ? <BoardList boards={boards} /> : <p>Loading...</p>}
-    </Box>
+    <Scaffold drawerChildren={<SideBar />}>
+      <Box sx={{ padding: 3 }}>
+        <Typography variant="h4" color="primary">
+          ห้องแนะนำ
+        </Typography>
+        <BoardList>
+          <BoardCard
+            title="สร้างห้องทำงาน"
+            type={boardTypePomodoro}
+            onClick={() => createBoard()}
+          />
+          <BoardCard title="สร้างห้องทำงาน" type={boardTypeStickies} />
+          <BoardCard title="สร้างห้องทำงาน" type={boardTypeBlank} />
+        </BoardList>
+        <Typography variant="h4" color="primary" sx={{ mt: 4 }}>
+          ห้องของฉัน
+        </Typography>
+        {boards !== null ? (
+          <BoardList>
+            {boards.map((board) => (
+              <FirebaseBoardCard key={board} boardId={board} />
+            ))}
+          </BoardList>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Box>
+    </Scaffold>
   )
 }
