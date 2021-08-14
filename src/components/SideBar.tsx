@@ -1,39 +1,27 @@
 import styled from '@emotion/styled'
-import {
-  Button,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Toolbar,
-} from '@material-ui/core'
+import { List, ListItem, ListItemText } from '@material-ui/core'
 import React from 'react'
 
-const drawerWidth = 240
+import { createBoard } from '@/backend/board'
 
-const NewButton = styled(Button)`
+import { AsyncButton } from './NewBoardButton'
+
+const NewButton = styled(AsyncButton)`
   margin: 16px;
   width: calc(100% - 32px);
 `
 
 export function SideBar() {
   return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: drawerWidth,
-          boxSizing: 'border-box',
-        },
-      }}
-    >
-      <Toolbar>Logo here</Toolbar>
-      <Divider />
-      <NewButton variant="contained">New Document</NewButton>
+    <>
+      <NewButton
+        variant="contained"
+        onClick={async () => {
+          await createBoard()
+        }}
+      >
+        New Workspace
+      </NewButton>
       <List>
         <ListItem button>
           <ListItemText>Home</ListItemText>
@@ -42,6 +30,6 @@ export function SideBar() {
           <ListItemText>Tutorial</ListItemText>
         </ListItem>
       </List>
-    </Drawer>
+    </>
   )
 }

@@ -1,4 +1,4 @@
-import { Avatar, Typography } from '@material-ui/core'
+import { Avatar, Skeleton, Typography } from '@material-ui/core'
 import React from 'react'
 
 import { useProfile } from '@/backend/profile'
@@ -8,14 +8,16 @@ import { useUser } from './UserProvider'
 export function TopBarUserProfile() {
   const user = useUser()
   const profile = useProfile(user.uid)
-  if (profile !== null) {
-    return (
-      <>
-        <Typography sx={{ marginRight: 2 }}>{profile.name}</Typography>
+  return (
+    <>
+      <Typography sx={{ marginRight: 2 }}>
+        {profile ? profile.name : <Skeleton variant="text" width={120} />}
+      </Typography>
+      {profile ? (
         <Avatar>{profile.name.substring(0, 1)}</Avatar>
-      </>
-    )
-  } else {
-    return null
-  }
+      ) : (
+        <Skeleton variant="circular" width={40} height={40} />
+      )}
+    </>
+  )
 }

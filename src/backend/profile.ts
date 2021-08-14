@@ -1,45 +1,35 @@
-import {
-  getDatabase,
-  ref,
-  child,
-  get,
-  update,
-  onValue,
-} from 'firebase/database'
-import { useEffect, useState } from 'react'
+import { getDatabase, ref, child, get, set } from 'firebase/database'
+import { useMemo } from 'react'
 
 import { Profile } from './types'
+import { useObject } from './utils'
 
 const defaultProfile: Profile = {
   name: 'Anonymous',
-}
-
-function profilePath(uid: string) {
-  return `/profiles/${uid}`
+  boards: {},
+  sharedBoards: {},
 }
 
 function profileRef(uid: string) {
   const dbRef = ref(getDatabase())
-  return child(dbRef, profilePath(uid))
+  return child(dbRef, `/profiles/${uid}`)
+}
+
+function profileBoardsRef(uid: string) {
+  return child(profileRef(uid), 'boards')
 }
 
 export async function createProfileIfNotExist(uid: string) {
   const profile = await get(profileRef(uid))
   if (!profile.exists()) {
-    update(ref(getDatabase()), {
-      [profilePath(uid)]: defaultProfile,
-    })
+    set(profileRef(uid), defaultProfile)
   }
 }
 
+export async function addBoardToProfile(uid: string, boardId: string) {
+  return await set(child(profileRef(uid), `boards/${boardId}`), true)
+}
+
 export function useProfile(uid: string) {
-  const [profile, setProfile] = useState<Profile | null>(null)
-
-  useEffect(() => {
-    return onValue(profileRef(uid), (snapshot) => {
-      setProfile(snapshot.val())
-    })
-  }, [uid])
-
-  return profile
+  return useObject<Profile>(useMemo(() => profileRef(uid), [uid]))
 }
