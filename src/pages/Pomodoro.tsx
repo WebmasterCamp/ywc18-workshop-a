@@ -1,10 +1,21 @@
 import styled from '@emotion/styled'
-import React, { useMemo, ReactElement, useState, useCallback, useEffect } from "react";
-import { Container, Button, LinearProgress, Typography } from '@material-ui/core';
-import { useTimer } from 'react-timer-hook';
-import { PomodoroMode } from '@/types';
-import PomodoroBackground from '@/public/pomodoro_background.svg';
+import {
+  Container,
+  Button,
+  LinearProgress,
+  Typography,
+} from '@material-ui/core'
+import React, {
+  useMemo,
+  ReactElement,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react'
+import { useTimer } from 'react-timer-hook'
 
+import PomodoroBackground from '@/public/pomodoro_background.svg'
+import { PomodoroMode } from '@/types'
 
 const TimerBox = styled.div`
   margin-top: 192px;
@@ -129,21 +140,35 @@ export function Pomodoro(): ReactElement {
   const renderTimerButtonContainer = () => {
     return (
       <TimerButtonContainer>
-      { mode === 'inactive' ?
-        <Button variant="contained" color="primary" onClick={handleStart}>เริ่มนับเวลา</Button>
-        :
-        <DangerButton variant="contained" color="secondary" onClick={handleStop}>เลิกนับเวลา</DangerButton>
-      }
+        {mode === 'inactive' ? (
+          <Button variant="contained" color="primary" onClick={handleStart}>
+            เริ่มนับเวลา
+          </Button>
+        ) : (
+          <DangerButton
+            variant="contained"
+            color="secondary"
+            onClick={handleStop}
+          >
+            เลิกนับเวลา
+          </DangerButton>
+        )}
       </TimerButtonContainer>
-    );
-  };
+    )
+  }
 
   const renderTimer = () => {
+    const minutesText = minutes < 10 ? `0${minutes}` : minutes
+    const secondsText = seconds < 10 ? `0${seconds}` : seconds
     return (
       <TimerBox>
-        <Typography variant="h6" fontWeight="medium">{modeLabel[mode]}</Typography>
+        <Typography variant="h6" fontWeight="medium">
+          {modeLabel[mode]}
+        </Typography>
         <TimerText>
-          <Typography variant="h1" fontWeight="medium">{minutes}:{seconds}</Typography>
+          <Typography variant="h1" fontWeight="medium">
+            {minutesText}:{secondsText}
+          </Typography>
         </TimerText>
         <LinearProgress variant="determinate" value={currentPercentage} />
         {renderTimerButtonContainer()}
@@ -152,11 +177,7 @@ export function Pomodoro(): ReactElement {
   }
 
   const renderTimerContainer = () => {
-    return (
-      <Container>
-        {renderTimer()}
-      </Container>
-    )
+    return <Container>{renderTimer()}</Container>
   }
 
   return (
