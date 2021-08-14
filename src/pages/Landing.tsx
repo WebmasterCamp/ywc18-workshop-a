@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Box, Button, Typography, Grid } from '@material-ui/core'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import React, { ReactElement } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import Content1 from '@/assets/images/content/1.svg'
 import Content2 from '@/assets/images/content/2.svg'
@@ -33,6 +33,8 @@ const description2 =
   'Wetime อยากช่วยให้ทุกคน Productive และทำงานง่าย ๆ เพราะแค่ทำงานที่บ้านก็เซ็งมากพอแล้ว อย่าให้การแบ่งเวลามาเป็นปัญหาของทุกคน พวกเราเองก็หวังว่าทุกคนจะทำงานได้อย่างราบรื่นจากเว็บไซด์ดี ๆ อย่าง Wetime ของเรานะ!'
 
 export function Landing(): ReactElement {
+  const history = useHistory()
+
   const Nav = (
     <Box height="64px" display="flex" padding="48px 64px" color="#555555">
       <Box>
@@ -72,7 +74,12 @@ export function Landing(): ReactElement {
           จึงมีไอเดียอยากให้การประชุมไม่น่าเบื่อและจำเจ
         </Typography>
       </Box>
-      <Button component={Link} to="/app" variant="contained">
+      <Button
+        onClick={() => {
+          history.push('/app')
+        }}
+        variant="contained"
+      >
         เริ่มใช้
         <img src={ButtonLogo} style={{ margin: '0 8px' }} />
         บนบราวเซอร์คุณ
