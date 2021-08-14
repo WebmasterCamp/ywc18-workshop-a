@@ -1,16 +1,25 @@
-import { Avatar, Skeleton, Typography } from '@material-ui/core'
+import { Avatar, Button, Skeleton, Typography } from '@material-ui/core'
+import { update } from 'firebase/database'
 import React from 'react'
 
-import { useProfile } from '@/backend/profile'
+import { profileRef, useProfile } from '@/backend/profile'
 
 import { useUser } from './UserProvider'
 
 export function TopBarUserProfile() {
   const user = useUser()
   const profile = useProfile(user.uid)
+
+  const handleClick = () => {
+    const newName = prompt('Change profile name')
+    if (newName !== null) {
+      update(profileRef(user.uid), { name: newName })
+    }
+  }
+
   return (
-    <>
-      <Typography sx={{ marginRight: 2 }}>
+    <Button variant="text" onClick={handleClick}>
+      <Typography variant="body1" sx={{ marginRight: 2 }}>
         {profile ? profile.name : <Skeleton variant="text" width={120} />}
       </Typography>
       {profile ? (
@@ -18,6 +27,6 @@ export function TopBarUserProfile() {
       ) : (
         <Skeleton variant="circular" width={40} height={40} />
       )}
-    </>
+    </Button>
   )
 }

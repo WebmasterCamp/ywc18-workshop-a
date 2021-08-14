@@ -10,7 +10,7 @@ const defaultProfile: Profile = {
   sharedBoards: {},
 }
 
-function profileRef(uid: string) {
+export function profileRef(uid: string) {
   const dbRef = ref(getDatabase())
   return child(dbRef, `/profiles/${uid}`)
 }
