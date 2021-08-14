@@ -3,9 +3,7 @@ import React, { useMemo, ReactElement, useState, useCallback, useEffect } from "
 import { Container, Button, LinearProgress } from '@material-ui/core';
 import { useTimer } from 'react-timer-hook';
 import { PomodoroMode } from '@/types';
-import { SideBar } from '@/components/SideBar';
 import PomodoroBackground from '@/public/pomodoro_background.svg';
-import { Scaffold } from '@/components/Scaffold';
 
 
 const TimerBox = styled.div`
@@ -166,11 +164,11 @@ export function Pomodoro(): ReactElement {
   }
 
   return (
-    <Scaffold drawerChildren={<SideBar />}>
+    <div>
       {renderTimerContainer()}
       <BackgroundContainer>
         <img src={PomodoroBackground} alt="React Logo" />
       </BackgroundContainer>
-    </Scaffold>
+    </div>
   )
 }
