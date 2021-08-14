@@ -7,12 +7,14 @@ import { useParams } from 'react-router-dom'
 import { boardRef, useBoard } from '@/backend/board'
 import { MemberItem } from '@/components/MemberItem'
 import { Scaffold } from '@/components/Scaffold'
+import { useUser } from '@/components/UserProvider'
 
 import { Pomodoro } from './Pomodoro'
 
 export function Board() {
   const { boardId } = useParams<{ boardId: string }>()
   const board = useBoard(boardId)
+  const user = useUser()
 
   const renameBoard = () => {
     const newName = prompt('Change board name')
@@ -42,9 +44,11 @@ export function Board() {
           <Typography variant="h6" sx={{ mr: 1 }}>
             {board ? board.name : <Skeleton variant="text" width={150} />}
           </Typography>
-          <IconButton size="small" onClick={renameBoard}>
-            <Create fontSize="small" />
-          </IconButton>
+          {board?.owner === user.uid ? (
+            <IconButton size="small" onClick={renameBoard}>
+              <Create fontSize="small" />
+            </IconButton>
+          ) : null}
         </>
       }
     >
