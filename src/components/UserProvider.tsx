@@ -15,22 +15,14 @@ const UserContext = createContext<firebase.User>(
 
 export function UserProvider({ children }: PropsWithChildren<{}>): JSX.Element {
   const [user, setUser] = useState<firebase.User | null>(null)
-  const [errored, setErrored] = useState(false)
 
   useEffect(() => {
-    getUser().then(
-      (user) => {
-        setUser(user)
-      },
-      () => {
-        setErrored(true)
-      }
-    )
+    return firebase.auth().onAuthStateChanged((user) => {
+      setUser(user)
+    })
   }, [])
 
-  if (errored) {
-    return <>Sign in error</>
-  } else if (user !== null) {
+  if (user !== null) {
     return <UserContext.Provider value={user}>{children}</UserContext.Provider>
   } else {
     return <>Loading...</>
