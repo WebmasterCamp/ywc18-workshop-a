@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import { addUserToBoard, getBoard } from '@/backend/board'
 import { addBoardToProfile } from '@/backend/profile'
+import { Loading } from '@/components/Loading'
 import { useUser } from '@/components/UserProvider'
 
 export function JoinBoard() {
@@ -28,5 +29,5 @@ export function JoinBoard() {
     joinBoard()
   }, [boardId, joined])
 
-  return <>Loading...</>
+  return <Loading />
 }

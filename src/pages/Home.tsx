@@ -1,5 +1,6 @@
 import { Box, Typography } from '@material-ui/core'
 import React, { useMemo } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { createBoard } from '@/backend/board'
 import { useProfile } from '@/backend/profile'
@@ -12,11 +13,13 @@ import {
 } from '@/components/BoardCard'
 import { BoardList } from '@/components/BoardList'
 import { FirebaseBoardCard } from '@/components/FirebaseBoardCard'
+import { Loading } from '@/components/Loading'
 import { Scaffold } from '@/components/Scaffold'
 import { SideBar } from '@/components/SideBar'
 import { useUser } from '@/components/UserProvider'
 
 export function Home() {
+  const history = useHistory()
   const profile = useProfile(useUser().uid)
   const rawBoards = profile?.boards
   const boards = useMemo(() => {
@@ -27,7 +30,7 @@ export function Home() {
     }
   }, [rawBoards])
   return (
-    <Scaffold drawerChildren={<SideBar />}>
+    <Scaffold linkToHome={false} drawerChildren={<SideBar />}>
       <Box sx={{ padding: 3 }}>
         <Typography variant="h4" color="primary">
           ห้องแนะนำ
@@ -36,7 +39,10 @@ export function Home() {
           <BoardCard
             title="สร้างห้องทำงาน"
             type={boardTypePomodoro}
-            onClick={() => createBoard()}
+            onClick={async () => {
+              const boardId = await createBoard()
+              history.push(`/app/board/${boardId}`)
+            }}
           />
           <BoardCard title="สร้างห้องทำงาน" type={boardTypeStickies} />
           <BoardCard title="สร้างห้องทำงาน" type={boardTypeBlank} />
@@ -51,7 +57,7 @@ export function Home() {
             ))}
           </BoardList>
         ) : (
-          <p>Loading...</p>
+          <Loading />
         )}
       </Box>
     </Scaffold>

@@ -4,7 +4,7 @@ import Add from '@material-ui/icons/Add'
 import Dashboard from '@material-ui/icons/Dashboard'
 import Help from '@material-ui/icons/Help'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { createBoard } from '@/backend/board'
 
@@ -17,12 +17,14 @@ const NewButton = styled(AsyncButton)`
 `
 
 export function SideBar() {
+  const history = useHistory()
   return (
     <>
       <NewButton
         variant="contained"
         onClick={async () => {
-          await createBoard()
+          const boardId = await createBoard()
+          history.push(`/app/board/${boardId}`)
         }}
         startIcon={<Add />}
       >

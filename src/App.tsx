@@ -2,6 +2,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
+import { Loading } from './components/Loading'
 import { Landing } from './pages/Landing'
 
 const MainApp = lazy(() => import('./MainApp'))
@@ -36,7 +37,7 @@ function App() {
         <Switch>
           <Route path="/" component={Landing} exact />
           <Route path="/app">
-            <Suspense fallback="Loading...">
+            <Suspense fallback={<Loading />}>
               <MainApp />
             </Suspense>
           </Route>

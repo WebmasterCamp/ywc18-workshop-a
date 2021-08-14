@@ -7,6 +7,8 @@ import React, {
   useState,
 } from 'react'
 
+import { Loading } from './Loading'
+
 const UserContext = createContext<firebase.User>(
   ({} as unknown) as firebase.User
 )
@@ -23,7 +25,7 @@ export function UserProvider({ children }: PropsWithChildren<{}>): JSX.Element {
   if (user !== null) {
     return <UserContext.Provider value={user}>{children}</UserContext.Provider>
   } else {
-    return <>Loading...</>
+    return <Loading />
   }
 }
 
