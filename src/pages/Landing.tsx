@@ -1,23 +1,24 @@
-import React, { ReactElement } from "react";
-import styled from '@emotion/styled';
-import NavLogo from '@/assets/images/logo.svg';
-import ButtonLogo from '@/assets/images/logo_button.svg';
-import TaglineLogo from '@/assets/images/logo_tagline.svg';
-import LandingHero from '@/assets/images/landing_hero.svg';
-import Triangle from '@/assets/images/purple_triangle.svg';
-import DescriptionArt from '@/assets/images/desc_art.svg';
-import Yolo1 from '@/assets/images/yolo1.png';
-import YoloFooter from '@/assets/images/yolo_footer.png';
-import Icon from '@/assets/images/icon.svg';
-import { Box, Button, Typography, Grid } from '@material-ui/core';
+import styled from '@emotion/styled'
+import { Box, Button, Typography, Grid } from '@material-ui/core'
+import FacebookIcon from '@material-ui/icons/Facebook'
+import React, { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
-import FacebookIcon from '@material-ui/icons/Facebook';
-import Content1 from '@/assets/images/content/1.svg';
-import Content2 from '@/assets/images/content/2.svg';
-import Content3 from '@/assets/images/content/3.svg';
-import Content4 from '@/assets/images/content/4.svg';
-import Content5 from '@/assets/images/content/5.svg';
-import Content6 from '@/assets/images/content/6.svg';
+
+import Content1 from '@/assets/images/content/1.svg'
+import Content2 from '@/assets/images/content/2.svg'
+import Content3 from '@/assets/images/content/3.svg'
+import Content4 from '@/assets/images/content/4.svg'
+import Content5 from '@/assets/images/content/5.svg'
+import Content6 from '@/assets/images/content/6.svg'
+import DescriptionArt from '@/assets/images/desc_art.svg'
+import Icon from '@/assets/images/icon.svg'
+import LandingHero from '@/assets/images/landing_hero.svg'
+import NavLogo from '@/assets/images/logo.svg'
+import ButtonLogo from '@/assets/images/logo_button.svg'
+import TaglineLogo from '@/assets/images/logo_tagline.svg'
+import Triangle from '@/assets/images/purple_triangle.svg'
+import Yolo1 from '@/assets/images/yolo1.png'
+import YoloFooter from '@/assets/images/yolo_footer.png'
 
 const Page = styled.div`
   // background: red;
@@ -32,8 +33,7 @@ const description2 =
   'Wetime อยากช่วยให้ทุกคน Productive และทำงานง่าย ๆ เพราะแค่ทำงานที่บ้านก็เซ็งมากพอแล้ว อย่าให้การแบ่งเวลามาเป็นปัญหาของทุกคน พวกเราเองก็หวังว่าทุกคนจะทำงานได้อย่างราบรื่นจากเว็บไซด์ดี ๆ อย่าง Wetime ของเรานะ!'
 
 export function Landing(): ReactElement {
-
-  const history = useHistory();
+  const history = useHistory()
 
   const Nav = (
     <Box height="64px" display="flex" padding="48px 64px" color="#555555">
@@ -74,7 +74,16 @@ export function Landing(): ReactElement {
           จึงมีไอเดียอยากให้การประชุมไม่น่าเบื่อและจำเจ
         </Typography>
       </Box>
-      <Button onClick={() => { history.push('/app') }} variant="contained">เริ่มใช้<img src={ButtonLogo} style={{margin: '0 8px'}} />บนบราวเซอร์คุณ</Button>
+      <Button
+        onClick={() => {
+          history.push('/app')
+        }}
+        variant="contained"
+      >
+        เริ่มใช้
+        <img src={ButtonLogo} style={{ margin: '0 8px' }} />
+        บนบราวเซอร์คุณ
+      </Button>
       <Box position="absolute" right="48px" bottom="0">
         <img src={LandingHero} style={{ width: '620px' }} />
       </Box>
@@ -100,24 +109,40 @@ export function Landing(): ReactElement {
 
   const yolo1 = (
     <Box display="flex" width="100%" margin="64px 0">
-      <img src={Yolo1} style={{width: '100%', margin: 'auto'}}/>
+      <img src={Yolo1} style={{ width: '100%', margin: 'auto' }} />
     </Box>
   )
 
   const yoloFooter = (
     <Box display="flex" width="100%">
-      <img src={YoloFooter} style={{width: '100%', margin: 'auto'}}/>
+      <img src={YoloFooter} style={{ width: '100%', margin: 'auto' }} />
     </Box>
   )
 
   const facebookCard = (image: any, title: string, url: string) => (
-    <Box display="block" borderRadius="38px" width="250px" style={{background: 'white'}}>
+    <Box
+      component="a"
+      href={url}
+      target="_blank"
+      display="block"
+      borderRadius="38px"
+      width="250px"
+      style={{
+        background: 'white',
+        textColor: 'inherit',
+        textDecoration: 'none',
+      }}
+    >
       <Box width="250px" borderRadius="38px">
-        <img src={image} style={{width: '100%'}}/>
+        <img src={image} style={{ width: '100%' }} />
       </Box>
       <Box padding="12px 8px" textAlign="center">
-        <Typography fontWeight="medium" lineHeight="20px">{title}</Typography>
-        <Typography fontWeight="light" style={{color: '#555555'}}>อ่านต่อ...</Typography>
+        <Typography fontWeight="medium" lineHeight="20px">
+          {title}
+        </Typography>
+        <Typography fontWeight="light" style={{ color: '#555555' }}>
+          อ่านต่อ...
+        </Typography>
       </Box>
     </Box>
   )
@@ -125,39 +150,72 @@ export function Landing(): ReactElement {
   const yoloFacebook = (
     <Box paddingBottom="64px" width="100%">
       <Box paddingTop="72px" width="100%" color="white" textAlign="center">
-        <Typography fontSize="42px" fontWeight="medium">บทความจากเรา</Typography>
+        <Typography fontSize="42px" fontWeight="medium">
+          บทความจากเรา
+        </Typography>
       </Box>
 
       <Box display="flex" margin="32px">
         <Box margin="auto">
           <Grid container spacing={2}>
             <Grid item>
-              {facebookCard(Content1, 'เว็บไซด์น้องใหม่ที่ทำให้การ WFH ไม่วุ่นวายอีกต่อไป', 'https://www.facebook.com/Wetimee/posts/103708118692676')}
+              {facebookCard(
+                Content1,
+                'เว็บไซด์น้องใหม่ที่ทำให้การ WFH ไม่วุ่นวายอีกต่อไป',
+                'https://www.facebook.com/Wetimee/posts/103708118692676'
+              )}
             </Grid>
             <Grid item>
-              {facebookCard(Content2, 'ทำงานอย่างมีประสิทธิภาพ กับการแบ่งเวลาด้วยมะเขือเทศ!', 'https://www.facebook.com/Wetimee/posts/103724258691062')}
+              {facebookCard(
+                Content2,
+                'ทำงานอย่างมีประสิทธิภาพ กับการแบ่งเวลาด้วยมะเขือเทศ!',
+                'https://www.facebook.com/Wetimee/posts/103724258691062'
+              )}
             </Grid>
             <Grid item>
-              {facebookCard(Content3, '“รับมืออย่างไร ถ้าฉันหมดไฟช่วย WFH!”', 'https://www.facebook.com/Wetimee/posts/103738155356339')}
+              {facebookCard(
+                Content3,
+                '“รับมืออย่างไร ถ้าฉันหมดไฟช่วย WFH!”',
+                'https://www.facebook.com/Wetimee/posts/103738155356339'
+              )}
             </Grid>
           </Grid>
-          <Box height="32px"/>
+          <Box height="32px" />
           <Grid container spacing={2}>
             <Grid item>
-              {facebookCard(Content4, 'เคล็ดลับทำให้WFH ไม่น่าเบื่อของแชมป์โต้อุดมฯ', 'https://www.facebook.com/Wetimee/posts/103800122016809')}
+              {facebookCard(
+                Content4,
+                'เคล็ดลับทำให้WFH ไม่น่าเบื่อของแชมป์โต้อุดมฯ',
+                'https://www.facebook.com/Wetimee/posts/103800122016809'
+              )}
             </Grid>
             <Grid item>
-              {facebookCard(Content5, ' แบ่งเวลา | วางตาราง | มีวินัย', 'https://www.facebook.com/Wetimee')}
+              {facebookCard(
+                Content5,
+                ' แบ่งเวลา | วางตาราง | มีวินัย',
+                'https://www.facebook.com/Wetimee'
+              )}
             </Grid>
             <Grid item>
-              {facebookCard(Content6, 'Wetime กับแนวคิดการทำงาน..', 'https://www.facebook.com/Wetimee')}
+              {facebookCard(
+                Content6,
+                'Wetime กับแนวคิดการทำงาน..',
+                'https://www.facebook.com/Wetimee'
+              )}
             </Grid>
           </Grid>
         </Box>
       </Box>
 
       <Box marginTop="30px" display="flex">
-        <Button href="https://www.facebook.com/Wetimee" variant="contained" style={{margin: 'auto', background: 'white', color: '#4A2EF4' }}><FacebookIcon />&nbsp;&nbsp;ติดตามต่อที่ Facebook</Button>
+        <Button
+          href="https://www.facebook.com/Wetimee"
+          variant="contained"
+          style={{ margin: 'auto', background: 'white', color: '#4A2EF4' }}
+        >
+          <FacebookIcon />
+          &nbsp;&nbsp;ติดตามต่อที่ Facebook
+        </Button>
       </Box>
     </Box>
   )
@@ -166,11 +224,23 @@ export function Landing(): ReactElement {
     <Box display="flex" width="100%">
       <Box padding="120px 0" margin="auto">
         <Box display="flex" marginBottom="16px">
-          <img src={Icon} style={{margin: 'auto'}} />
+          <img src={Icon} style={{ margin: 'auto' }} />
         </Box>
-        <Typography color="primary" fontWeight="light" fontSize="26px">ใช้เวลาอย่างคุ้มค่าของทุกคนไปกับวีไทม์</Typography>
+        <Typography color="primary" fontWeight="light" fontSize="26px">
+          ใช้เวลาอย่างคุ้มค่าของทุกคนไปกับวีไทม์
+        </Typography>
         <Box display="flex" marginTop="24px">
-          <Button onClick={() => { history.push('/app') }} variant="contained" style={{margin: 'auto'}}>เริ่มใช้<img src={ButtonLogo} style={{margin: '0 8px'}} />บนบราวเซอร์คุณ</Button>
+          <Button
+            onClick={() => {
+              history.push('/app')
+            }}
+            variant="contained"
+            style={{ margin: 'auto' }}
+          >
+            เริ่มใช้
+            <img src={ButtonLogo} style={{ margin: '0 8px' }} />
+            บนบราวเซอร์คุณ
+          </Button>
         </Box>
       </Box>
     </Box>
@@ -179,9 +249,9 @@ export function Landing(): ReactElement {
   const Description2 = (
     <Box position="absolute" left="0" width="100%">
       <Box>
-        <img src={Triangle} style={{width: '100%'}}/>
+        <img src={Triangle} style={{ width: '100%' }} />
       </Box>
-      <Box style={{background: '#4A2EF4'}} marginTop="-40px">
+      <Box style={{ background: '#4A2EF4' }} marginTop="-40px">
         <Box width="100%" display="flex">
           <Box margin="auto">
             <Box margin="-50px -34px 0 0">
@@ -198,7 +268,7 @@ export function Landing(): ReactElement {
       <Box maxWidth="1200px" margin="auto">
         {yolo1}
       </Box>
-      <Box style={{background: '#4A2EF4'}}>
+      <Box style={{ background: '#4A2EF4' }}>
         <Box maxWidth="1200px" margin="auto">
           {yoloFacebook}
         </Box>
@@ -206,7 +276,7 @@ export function Landing(): ReactElement {
       <Box maxWidth="1200px" margin="auto">
         {appFotter}
       </Box>
-      <Box style={{background: '#F9F9FB'}}>
+      <Box style={{ background: '#F9F9FB' }}>
         <Box maxWidth="1200px" margin="auto">
           {yoloFooter}
         </Box>
