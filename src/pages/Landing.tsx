@@ -129,7 +129,7 @@ export function Landing(): ReactElement {
       width="250px"
       style={{
         background: 'white',
-        textColor: 'inherit',
+        color: 'inherit',
         textDecoration: 'none',
       }}
     >
