@@ -12,6 +12,7 @@ import Add from '@material-ui/icons/Add'
 import Check from '@material-ui/icons/Check'
 import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import Create from '@material-ui/icons/Create'
+import Share from '@material-ui/icons/Share'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useCopyClipboard from 'react-use-clipboard'
@@ -75,6 +76,7 @@ export function Board() {
           ) : null}
         </>
       }
+      topBarEndChildren={<ShareButton boardId={boardId} />}
     >
       <Pomodoro />
     </Scaffold>
@@ -95,5 +97,24 @@ function InviteButton({ boardId }: { boardId: string }) {
         {isCopied ? 'คัดลอกลิงก์แล้ว' : 'ชวนสมาชิกเพิ่ม'}
       </ListItemText>
     </ListItem>
+  )
+}
+
+function ShareButton({ boardId }: { boardId: string }) {
+  const [isCopied, setCopied] = useCopyClipboard(
+    `${window.location.origin}/app/joinboard/${boardId}`,
+    {
+      successDuration: 1000,
+    }
+  )
+  return (
+    <Button
+      variant="contained"
+      onClick={setCopied}
+      startIcon={isCopied ? <Check /> : <Share />}
+      sx={{ mr: 2 }}
+    >
+      {isCopied ? 'คัดลอกลิงก์แล้ว' : 'แชร์'}
+    </Button>
   )
 }

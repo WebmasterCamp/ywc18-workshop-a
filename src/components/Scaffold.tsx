@@ -12,6 +12,7 @@ export interface ScaffoldProps {
   linkToHome?: boolean
   drawerChildren: React.ReactNode
   topBarChildren?: React.ReactNode
+  topBarEndChildren?: React.ReactNode
   children: React.ReactNode
 }
 
@@ -19,6 +20,7 @@ export function Scaffold({
   linkToHome,
   drawerChildren,
   topBarChildren,
+  topBarEndChildren,
   children,
 }: ScaffoldProps) {
   const logoImg = <img src={logo} style={{ width: 150, height: 32 }} />
@@ -49,7 +51,7 @@ export function Scaffold({
         {drawerChildren}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1 }}>
-        <TopBar>{topBarChildren}</TopBar>
+        <TopBar endChildren={topBarEndChildren}>{topBarChildren}</TopBar>
         {children}
       </Box>
     </Box>
