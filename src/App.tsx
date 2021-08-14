@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { UserProvider } from './components/UserProvider'
 import { Board } from './pages/Board'
 import { Home } from './pages/Home'
+import { Landing } from './pages/Landing'
 
 const theme = createTheme({
   palette: {
@@ -37,7 +38,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Switch>
-            <Route path="/" component={Home} exact />
+            <Route path="/" component={Landing} exact />
+            <Route path="/home" component={Home} />
             <Route path="/board/:boardId" component={Board} />
           </Switch>
         </BrowserRouter>
