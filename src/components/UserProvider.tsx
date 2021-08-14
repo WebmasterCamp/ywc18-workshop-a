@@ -7,8 +7,6 @@ import React, {
   useState,
 } from 'react'
 
-import { getUser } from '@/backend/user'
-
 const UserContext = createContext<firebase.User>(
   ({} as unknown) as firebase.User
 )

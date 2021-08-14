@@ -10,7 +10,7 @@ export function TopBarUserProfile() {
   const profile = useProfile(user.uid)
 
   const handleClick = () => {
-    const newName = prompt('Change profile name')
+    const newName = prompt('เปลี่ยนชื่อโปรไฟล์', profile?.name)
     if (newName !== null) {
       profileRef(user.uid).update({ name: newName })
     }

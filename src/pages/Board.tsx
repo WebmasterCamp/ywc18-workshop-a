@@ -16,7 +16,7 @@ export function Board() {
   const user = useUser()
 
   const renameBoard = () => {
-    const newName = prompt('Change board name')
+    const newName = prompt('เปลี่ยนชื่อห้องทำงาน', board?.name)
     if (newName !== null) {
       boardRef(boardId).update({ name: newName })
     }
@@ -28,7 +28,7 @@ export function Board() {
         board ? (
           <div>
             <Typography variant="h6" sx={{ pt: 2, px: 2 }}>
-              Members
+              สมาชิก
             </Typography>
             <List>
               {Object.keys(board.members).map((member) => (

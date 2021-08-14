@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { List, ListItem, ListItemText } from '@material-ui/core'
+import Add from '@material-ui/icons/Add'
 import React from 'react'
 
 import { createBoard } from '@/backend/board'
@@ -19,15 +20,16 @@ export function SideBar() {
         onClick={async () => {
           await createBoard()
         }}
+        startIcon={<Add />}
       >
-        New Workspace
+        สร้างห้องทำงาน
       </NewButton>
       <List>
         <ListItem button>
-          <ListItemText>Home</ListItemText>
+          <ListItemText>หน้าแรก</ListItemText>
         </ListItem>
         <ListItem button>
-          <ListItemText>Tutorial</ListItemText>
+          <ListItemText>วิธีใช้งาน</ListItemText>
         </ListItem>
       </List>
     </>

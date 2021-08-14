@@ -20,7 +20,7 @@ function MyBoards() {
   const profile = useProfile(useUser().uid)
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h4">My workspaces</Typography>
+      <Typography variant="h4">ห้องของฉัน</Typography>
       {profile ? (
         <BoardList boards={Object.keys(profile.boards ?? {})} />
       ) : (

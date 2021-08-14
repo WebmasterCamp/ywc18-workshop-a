@@ -23,11 +23,12 @@ export function boardRef(boardId: string) {
 export async function createBoard() {
   const user = await getUser()
   const board = {
-    name: 'Untitled workspace',
+    name: 'ห้องทำงานใหม่',
     owner: user.uid,
     members: {
       [user.uid]: true,
     },
+    state: emptyBoardState,
   }
   const newRef = firebase.database().ref('boards').push()
   await newRef.set(board)
