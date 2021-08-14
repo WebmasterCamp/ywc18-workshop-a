@@ -10,10 +10,10 @@ function App() {
     <UserProvider>
       <BrowserRouter>
         <Switch>
-          <Route path="/" component={Home} />
+          <Route path="/pomodoro" component={Pomodoro} />
         </Switch>
         <Switch>
-          <Route path="/pomodoro" component={Pomodoro} />
+          <Route path="/" component={Home} />
         </Switch>
       </BrowserRouter>
     </UserProvider>
