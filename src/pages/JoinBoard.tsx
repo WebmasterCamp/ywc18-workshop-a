@@ -18,11 +18,11 @@ export function JoinBoard() {
     async function joinBoard() {
       const board = await getBoard(boardId)
       if (board === null) {
-        history.replace('/home')
+        history.replace('/app')
       } else {
         await addBoardToProfile(user.uid, boardId)
         await addUserToBoard(boardId, user.uid)
-        history.replace(`/board/${boardId}`)
+        history.replace(`/app/board/${boardId}`)
       }
     }
     joinBoard()

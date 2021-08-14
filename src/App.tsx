@@ -1,12 +1,10 @@
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import { UserProvider } from './components/UserProvider'
-import { Board } from './pages/Board'
-import { Home } from './pages/Home'
-import { JoinBoard } from './pages/JoinBoard'
 import { Landing } from './pages/Landing'
+
+const MainApp = lazy(() => import('./MainApp'))
 
 const theme = createTheme({
   palette: {
@@ -33,18 +31,18 @@ const theme = createTheme({
 
 function App() {
   return (
-    <UserProvider>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/" component={Landing} exact />
-            <Route path="/home" component={Home} />
-            <Route path="/board/:boardId" component={Board} />
-            <Route path="/joinboard/:boardId" component={JoinBoard} />
-          </Switch>
-        </BrowserRouter>
-      </ThemeProvider>
-    </UserProvider>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={Landing} exact />
+          <Route path="/app">
+            <Suspense fallback="Loading...">
+              <MainApp />
+            </Suspense>
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

@@ -40,7 +40,7 @@ const BoardName = styled.div`
 export function BoardCard({ boardId }: BoardCardProps) {
   const boardName = useBoardName(boardId)
   return (
-    <Layout to={`/board/${boardId}`}>
+    <Layout to={`/app/board/${boardId}`}>
       <Preview />
       <BoardName>
         <Typography>{boardName}</Typography>

@@ -69,12 +69,12 @@ export function Board() {
 }
 
 function InviteButton({ boardId }: { boardId: string }) {
-  const [
-    isCopied,
-    setCopied,
-  ] = useCopyClipboard(`${window.location.origin}/joinboard/${boardId}`, {
-    successDuration: 1000,
-  })
+  const [isCopied, setCopied] = useCopyClipboard(
+    `${window.location.origin}/app/joinboard/${boardId}`,
+    {
+      successDuration: 1000,
+    }
+  )
   return (
     <ListItem button onClick={setCopied}>
       <ListItemIcon>{isCopied ? <Check /> : <Add />}</ListItemIcon>
