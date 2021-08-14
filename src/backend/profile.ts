@@ -7,7 +7,6 @@ import { useObject } from './utils'
 const defaultProfile: Profile = {
   name: 'Anonymous',
   boards: {},
-  sharedBoards: {},
 }
 
 export function profileRef(uid: string) {
@@ -23,7 +22,9 @@ export async function createProfileIfNotExist(uid: string) {
 }
 
 export async function addBoardToProfile(uid: string, boardId: string) {
-  return await profileRef(uid).child(`boards/${boardId}`).set(true)
+  return await profileRef(uid)
+    .child(`boards/${boardId}`)
+    .set(firebase.database.ServerValue.TIMESTAMP)
 }
 
 export function useProfile(uid: string) {

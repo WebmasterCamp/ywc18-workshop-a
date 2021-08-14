@@ -1,9 +1,23 @@
-import { IconButton, List, Skeleton, Typography } from '@material-ui/core'
+import {
+  Button,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Skeleton,
+  Typography,
+} from '@material-ui/core'
+import Add from '@material-ui/icons/Add'
+import Check from '@material-ui/icons/Check'
+import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import Create from '@material-ui/icons/Create'
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import useCopyClipboard from 'react-use-clipboard'
 
 import { boardRef, useBoard } from '@/backend/board'
+import { sortByValue } from '@/backend/utils'
 import { MemberItem } from '@/components/MemberItem'
 import { Scaffold } from '@/components/Scaffold'
 import { useUser } from '@/components/UserProvider'
@@ -27,13 +41,24 @@ export function Board() {
       drawerChildren={
         board ? (
           <div>
-            <Typography variant="h6" sx={{ pt: 2, px: 2 }}>
+            <Button
+              component={Link}
+              to="/app"
+              variant="text"
+              startIcon={<ChevronLeft />}
+              sx={{ m: 1 }}
+            >
+              หน้าแรก
+            </Button>
+
+            <Typography variant="h6" sx={{ px: 2 }}>
               สมาชิก
             </Typography>
             <List>
-              {Object.keys(board.members).map((member) => (
+              {sortByValue(board.members).map((member) => (
                 <MemberItem key={member} memberId={member} />
               ))}
+              <InviteButton boardId={boardId} />
             </List>
           </div>
         ) : null
@@ -53,5 +78,22 @@ export function Board() {
     >
       <Pomodoro />
     </Scaffold>
+  )
+}
+
+function InviteButton({ boardId }: { boardId: string }) {
+  const [isCopied, setCopied] = useCopyClipboard(
+    `${window.location.origin}/app/joinboard/${boardId}`,
+    {
+      successDuration: 1000,
+    }
+  )
+  return (
+    <ListItem button onClick={setCopied}>
+      <ListItemIcon>{isCopied ? <Check /> : <Add />}</ListItemIcon>
+      <ListItemText>
+        {isCopied ? 'คัดลอกลิงก์แล้ว' : 'ชวนสมาชิกเพิ่ม'}
+      </ListItemText>
+    </ListItem>
   )
 }
