@@ -46,12 +46,12 @@ export function Board() {
               to="/app"
               variant="text"
               startIcon={<ChevronLeft />}
-              sx={{ ml: 1, mt: 2 }}
+              sx={{ m: 1 }}
             >
               หน้าแรก
             </Button>
 
-            <Typography variant="h6" sx={{ pt: 1, px: 2 }}>
+            <Typography variant="h6" sx={{ px: 2 }}>
               สมาชิก
             </Typography>
             <List>
