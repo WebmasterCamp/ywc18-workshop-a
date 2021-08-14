@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useMemo, ReactElement, useState, useCallback, useEffect } from "react";
-import { Container, Button, LinearProgress } from '@material-ui/core';
+import { Container, Button, LinearProgress, Typography } from '@material-ui/core';
 import { useTimer } from 'react-timer-hook';
 import { PomodoroMode } from '@/types';
 import PomodoroBackground from '@/public/pomodoro_background.svg';
@@ -17,10 +17,6 @@ const TimerButtonContainer = styled.div`
   display: flex;
   margin-top: 16px;
   justify-content: center;
-`
-const ModeText = styled.div`
-  font-size: 24px;
-  font-weight: semi-bold;
 `
 
 const TimerText = styled.div`
@@ -145,9 +141,9 @@ export function Pomodoro(): ReactElement {
   const renderTimer = () => {
     return (
       <TimerBox>
-        <ModeText>{modeLabel[mode]}</ModeText>
+        <Typography variant="h6" fontWeight="medium">{modeLabel[mode]}</Typography>
         <TimerText>
-          {minutes}:{seconds}
+          <Typography variant="h1" fontWeight="medium">{minutes}:{seconds}</Typography>
         </TimerText>
         <LinearProgress variant="determinate" value={currentPercentage} />
         {renderTimerButtonContainer()}

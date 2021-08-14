@@ -24,7 +24,12 @@ const theme = createTheme({
       },
     },
   },
-})
+  typography: {
+    fontFamily: [
+      'Kanit',
+    ].join(','),
+  },
+});
 
 function App() {
   return (
