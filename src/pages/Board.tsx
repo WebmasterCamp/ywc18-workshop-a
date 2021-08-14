@@ -1,4 +1,5 @@
 import {
+  Button,
   IconButton,
   List,
   ListItem,
@@ -9,9 +10,10 @@ import {
 } from '@material-ui/core'
 import Add from '@material-ui/icons/Add'
 import Check from '@material-ui/icons/Check'
+import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import Create from '@material-ui/icons/Create'
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import useCopyClipboard from 'react-use-clipboard'
 
 import { boardRef, useBoard } from '@/backend/board'
@@ -39,7 +41,17 @@ export function Board() {
       drawerChildren={
         board ? (
           <div>
-            <Typography variant="h6" sx={{ pt: 2, px: 2 }}>
+            <Button
+              component={Link}
+              to="/app"
+              variant="text"
+              startIcon={<ChevronLeft />}
+              sx={{ ml: 1, mt: 2 }}
+            >
+              หน้าแรก
+            </Button>
+
+            <Typography variant="h6" sx={{ pt: 1, px: 2 }}>
               สมาชิก
             </Typography>
             <List>
