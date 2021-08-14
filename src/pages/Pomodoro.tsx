@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { SideBar } from '@/components/SideBar';
 import { TopBar } from '@/components/TopBar';
 import PomodoroBackground from '@/public/pomodoro_background.svg';
+import { Scaffold } from '@/components/Scaffold';
 
 const Layout = styled.div`
   display: flex;
@@ -182,15 +183,13 @@ export function Pomodoro(): ReactElement {
   };
 
   return (
-    <Layout>
-      <SideBar />
+    <Scaffold drawerChildren={<SideBar />}>
       <Box component="main" sx={{ flexGrow: 1 }}>
-        <TopBar />
         {renderTimerContainer()}
         <BackgroundContainer>
           <img src={PomodoroBackground} alt="React Logo" />
         </BackgroundContainer>
       </Box>
-    </Layout>
+    </Scaffold>
   );
 };
